@@ -1,0 +1,27 @@
+.set-username-container {
+    display: flex;
+    margin-top: 20px;
+  
+    input {
+      flex-grow: 1;
+      padding: 8px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+  
+    button {
+      background-color: #2196f3;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color: #0e79b2;
+      }
+    }
+  }
