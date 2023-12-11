@@ -17,15 +17,21 @@ app.get('/', (req, res) => {
 let userList = new Map();
 
 io.on('connection', (socket) => {
-  let userName = socket.handshake.query.userName;
-  addUser(userName, socket.id);
+    // Extracting the userName from the handshake query parameter
+     let userName = socket.handshake.query.userName;
+    // Adding the user to some user list using the addUser function
+      addUser(userName, socket.id);
 
   console.log(`User connected: ${userName}, Socket ID: ${socket.id}`);
+  // Broadcasting the user list to all connected clients except the current one
+   socket.broadcast.emit('user-list', [...userList.keys()]);
 
-  socket.broadcast.emit('user-list', [...userList.keys()]);
-  socket.emit('user-list', [...userList.keys()]);
 
-  socket.on('message', (msg) => {
+     // Sending the user list to the current client
+     socket.emit('user-list', [...userList.keys()]);
+
+     // Handling incoming 'message' events from clients 
+    socket.on('message', (msg) => {
     console.log('Message received on server:', msg);
     io.emit('message-broadcast', { message: msg, userName: userName });
   });

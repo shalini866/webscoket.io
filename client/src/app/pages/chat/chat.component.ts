@@ -24,7 +24,7 @@ export class ChatComponent implements OnInit {
     console.log('this.socket',this.socket)
     this.userName = name;
 
-    this.socket.emit('set-user-name', name);
+    // this.socket.emit('set-user-name', name);
 
     this.socket.on('user-list', (userList: string[]) => {
       this.userList = userList;
@@ -32,9 +32,9 @@ export class ChatComponent implements OnInit {
 
     this.socket.on('message-broadcast', (data: { message: string, userName: string }) => {
       console.log('Message received on client:', data);
-      if (data && this.messageList.every(msg => msg.message !== data.message)) {
+      if (!this.messageList.some(msg => msg.message === data.message)) {
         this.messageList.push({ message: data.message, userName: data.userName, mine: false });
-      }
+    }    
     });
   }
 
